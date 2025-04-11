@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class ResponsiveLayout extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
   @override
-  _ResponsiveLayoutState createState() => _ResponsiveLayoutState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _ResponsiveLayoutState extends State<ResponsiveLayout> {
+class _HomeScreenState extends State<HomeScreen> {
   bool isSidebarCollapsed = true;
 
   void setSidebarCollapsed(bool value) {
@@ -16,17 +16,33 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout> {
       isSidebarCollapsed = value;
     });
   }
-
   @override
   Widget build(BuildContext context) {
     final isDesktop = MediaQuery.of(context).size.width >= 600;
-
     return Scaffold(
-      appBar: AppBar(
+      appBar:AppBar(
         backgroundColor: Colors.lightBlue,
-        title: const Text('ُTank '),
+        title:Text("Tank") ,
+        leading: isDesktop
+            ? null
+            : Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
+        ),
+
       ),
-      body: Row(
+      drawer: isDesktop
+          ? null
+          : Drawer(
+        backgroundColor:Colors.blueGrey[800],
+        child: SidebarContent(
+          collapsed: false,
+          onItemTap: () => Navigator.pop(context),
+        ),
+      ),
+      body:  Row(
         children: [
           if (isDesktop)
             MouseRegion(
@@ -37,6 +53,7 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout> {
                 width: isSidebarCollapsed ? 70 : 200,
                 color: Colors.blueGrey[800],
                 child: SidebarContent(
+                  onItemTap: (){},
                   collapsed: isSidebarCollapsed,
                 ),
               ),
@@ -54,18 +71,17 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout> {
     );
   }
 }
-
 class SidebarContent extends StatelessWidget {
   final bool collapsed;
 
   const SidebarContent({
-    this.collapsed = false,
+    this.collapsed = false, required void Function() onItemTap,
   });
-
   @override
   Widget build(BuildContext context) {
     return ListView(
       children: [
+        const SizedBox(height: 40,),
         ListTile(
           leading: const Icon(Icons.calculate, color: Colors.white),
           title: collapsed ? null : const Text('ماشین حساب', style: TextStyle(color: Colors.white)),

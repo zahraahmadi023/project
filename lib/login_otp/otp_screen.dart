@@ -29,27 +29,6 @@ class _OtpScreenState extends State<OtpScreen> {
   }
 
 
-  String convertToEnglishNumbers(String input) {
-    const Map<String, String> numbersMap = {
-      '۰': '0',
-      '۱': '1',
-      '۲': '2',
-      '۳': '3',
-      '۴': '4',
-      '۵': '5',
-      '۶': '6',
-      '۷': '7',
-      '۸': '8',
-      '۹': '9',
-    };
-
-    numbersMap.forEach((key, value) {
-      input = input.replaceAll(key, value);
-    });
-
-    return input;
-  }
-
   Country? selectedCountry;
 
   final TextEditingController phoneController = TextEditingController();
@@ -171,7 +150,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     onPressed: isButtonEnabled
                         ? () {
                             String input =
-                                convertToEnglishNumbers(phoneController.text);
+                            convertToFarsiWithIntl(phoneController.text);
                             if (input.length != 6||input.isNotEmpty){
                               context.go('/home');
                             }

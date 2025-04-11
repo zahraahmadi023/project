@@ -26,34 +26,13 @@ class _LoginScreenState extends State<LoginScreen> {
       });
     }
   }
-
-  String convertToEnglishNumbers(String input) {
-    const Map<String, String> numbersMap = {
-      '۰': '0',
-      '۱': '1',
-      '۲': '2',
-      '۳': '3',
-      '۴': '4',
-      '۵': '5',
-      '۶': '6',
-      '۷': '7',
-      '۸': '8',
-      '۹': '9',
-    };
-    numbersMap.forEach((key, value) {
-      input = input.replaceAll(key, value);
-    });
-
-    return input;
-  }
-
   final TextEditingController phoneController = TextEditingController();
 
-  bool isRed = false;
+  bool isBlack = false;
 
   void _toggleColor() {
     setState(() {
-      isRed = !isRed;
+      isBlack = !isBlack;
     });
   }
 
@@ -116,14 +95,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                   );
                 },
-                child: Stack(clipBehavior: Clip.none, children: [
+                child: Stack(
+                    clipBehavior: Clip.none,
+                    children: [
                   Container(
                     width: 300,
                     height: 50,
                     padding: const EdgeInsets.symmetric(horizontal: 12),
                     decoration: BoxDecoration(
                       border: Border.all(
-                        color: isRed ? Colors.black : Colors.blue,
+                        color: isBlack ? Colors.black : Colors.blue,
                       ),
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -188,7 +169,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
 
                       textAlign: TextAlign.left,
-                      //textAlign: TextAlign.right, // اینجا تغییر دادیم به راست‌چین
+                      //textAlign: TextAlign.right,
                       decoration: InputDecoration(
                         //hintTextDirection: Alignment.centerLeft,
                         floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -235,7 +216,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ? () {
 
                             String input =
-                                convertToEnglishNumbers(phoneController.text);
+                            convertToFarsiWithIntl(phoneController.text);
                             String? phoneCode =
                                 selectedCountry?.phoneCode ?? '۹۸';
 

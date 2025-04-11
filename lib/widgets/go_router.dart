@@ -26,7 +26,7 @@ class AppRouter {
       ),
       GoRoute(
         path: '/home',
-        builder: (context, state) => ResponsiveLayout(),
+        builder: (context, state) => HomeScreen(),
       ),
       GoRoute(
         path: '/calc',
