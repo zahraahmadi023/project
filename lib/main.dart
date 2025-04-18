@@ -1,23 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:project/home_screen.dart';
-import 'package:project/login_otp/login_screen.dart';
-import 'package:project/login_otp/otp_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:project/bloc/auth_bloc.dart';
 import 'package:project/widgets/go_router.dart';
 
-
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
+
+// class MyApp extends StatelessWidget {
+//   const MyApp({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp.router(
+//       routerConfig: AppRouter.router,
+//       debugShowCheckedModeBanner: false,
+//     );
+//   }
+// }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: AppRouter.router,
-      debugShowCheckedModeBanner: false,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<PhoneAuthBloc>(
+          create: (context) => PhoneAuthBloc(),
+        ),
+      ],
+      child: MaterialApp.router(
+        routerConfig: AppRouter.router,
+        debugShowCheckedModeBanner: false,
+      ),
     );
   }
 }

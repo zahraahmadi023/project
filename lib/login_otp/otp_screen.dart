@@ -21,13 +21,11 @@ class _OtpScreenState extends State<OtpScreen> {
       return formatter.format(int.parse(input));
     } catch (e) {
       return input.replaceAllMapped(RegExp(r'[0-9]'), (match) {
-
         final num = match.group(0)!;
         return String.fromCharCode(num.codeUnitAt(0) + 1728);
       });
     }
   }
-
 
   Country? selectedCountry;
 
@@ -71,7 +69,6 @@ class _OtpScreenState extends State<OtpScreen> {
                   fontSize: 16,
                 ),
               ),
-
               const SizedBox(
                 height: 20,
               ),
@@ -83,20 +80,22 @@ class _OtpScreenState extends State<OtpScreen> {
                     child: TextField(
                       controller: phoneController,
                       keyboardType: TextInputType.number,
-                      maxLength:6,
+                      maxLength: 6,
                       onChanged: (value) {
                         final farsi = convertToFarsiWithIntl(value);
 
                         if (value != farsi) {
                           phoneController.value = TextEditingValue(
                             text: farsi,
-                            selection: TextSelection.collapsed(offset: farsi.length),
+                            selection:
+                                TextSelection.collapsed(offset: farsi.length),
                           );
                         }
 
                         final english = value.replaceAllMapped(
                           RegExp(r'[۰-۹]'),
-                              (match) => (match.group(0)!.codeUnitAt(0) - 1728).toString(),
+                          (match) =>
+                              (match.group(0)!.codeUnitAt(0) - 1728).toString(),
                         );
 
                         setState(() {
@@ -133,7 +132,6 @@ class _OtpScreenState extends State<OtpScreen> {
                       errorText!,
                       style: const TextStyle(color: Colors.red, fontSize: 13),
                     ),
-
                 ],
               ),
               const SizedBox(
@@ -150,11 +148,10 @@ class _OtpScreenState extends State<OtpScreen> {
                     onPressed: isButtonEnabled
                         ? () {
                             String input =
-                            convertToFarsiWithIntl(phoneController.text);
-                            if (input.length != 6||input.isNotEmpty){
+                                convertToFarsiWithIntl(phoneController.text);
+                            if (input.length != 6 || input.isNotEmpty) {
                               context.go('/home');
-                            }
-                            else {
+                            } else {
                               setState(() {
                                 errorText = null;
                               });
@@ -188,3 +185,5 @@ class _OtpScreenState extends State<OtpScreen> {
     );
   }
 }
+/////
+////////

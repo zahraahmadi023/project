@@ -1,5 +1,3 @@
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -91,9 +89,11 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFDAD2FF),
       appBar: AppBar(
-        leading: IconButton(onPressed: (){
-          context.go('/home');
-        }, icon: Icon(Icons.arrow_back_ios)),
+        leading: IconButton(
+            onPressed: () {
+              context.go('/home');
+            },
+            icon: Icon(Icons.arrow_back_ios)),
         title: const Text(
           "Calculator",
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -108,7 +108,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
           child: Column(
             children: [
               Expanded(
-                flex:2,
+                flex: 2,
                 child: Container(
                   alignment: Alignment.bottomRight,
                   padding: const EdgeInsets.all(16),
@@ -144,41 +144,89 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                CalcButton(text: "C", fillColor: 0xFF7886C7, callback: btnOnClick),
-                                CalcButton(text: "/", fillColor: 0xFF7886C7, callback: btnOnClick),
-                                CalcButton(text: "-", fillColor: 0xFF7886C7, callback: btnOnClick),
+                                CalcButton(
+                                    text: "C",
+                                    fillColor: 0xFF7886C7,
+                                    callback: btnOnClick),
+                                CalcButton(
+                                    text: "/",
+                                    fillColor: 0xFF7886C7,
+                                    callback: btnOnClick),
+                                CalcButton(
+                                    text: "-",
+                                    fillColor: 0xFF7886C7,
+                                    callback: btnOnClick),
                               ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                CalcButton(text: "7", fillColor: 0xFF493D9E, callback: btnOnClick),
-                                CalcButton(text: "8", fillColor: 0xFF493D9E, callback: btnOnClick),
-                                CalcButton(text: "9", fillColor: 0xFF493D9E, callback: btnOnClick),
+                                CalcButton(
+                                    text: "7",
+                                    fillColor: 0xFF493D9E,
+                                    callback: btnOnClick),
+                                CalcButton(
+                                    text: "8",
+                                    fillColor: 0xFF493D9E,
+                                    callback: btnOnClick),
+                                CalcButton(
+                                    text: "9",
+                                    fillColor: 0xFF493D9E,
+                                    callback: btnOnClick),
                               ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                CalcButton(text: "4", fillColor: 0xFF493D9E, callback: btnOnClick),
-                                CalcButton(text: "5", fillColor: 0xFF493D9E, callback: btnOnClick),
-                                CalcButton(text: "6", fillColor: 0xFF493D9E, callback: btnOnClick),
+                                CalcButton(
+                                    text: "4",
+                                    fillColor: 0xFF493D9E,
+                                    callback: btnOnClick),
+                                CalcButton(
+                                    text: "5",
+                                    fillColor: 0xFF493D9E,
+                                    callback: btnOnClick),
+                                CalcButton(
+                                    text: "6",
+                                    fillColor: 0xFF493D9E,
+                                    callback: btnOnClick),
                               ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                CalcButton(text: "1", fillColor: 0xFF493D9E, callback: btnOnClick),
-                                CalcButton(text: "2", fillColor: 0xFF493D9E, callback: btnOnClick),
-                                CalcButton(text: "3", fillColor: 0xFF493D9E, callback: btnOnClick),
+                                CalcButton(
+                                    text: "1",
+                                    fillColor: 0xFF493D9E,
+                                    callback: btnOnClick),
+                                CalcButton(
+                                    text: "2",
+                                    fillColor: 0xFF493D9E,
+                                    callback: btnOnClick),
+                                CalcButton(
+                                    text: "3",
+                                    fillColor: 0xFF493D9E,
+                                    callback: btnOnClick),
                               ],
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                CalcButton(text: "AC", fillColor: 0xFF7886C7, textSize: 24, callback: btnOnClick),
-                                CalcButton(text: "0", fillColor: 0xFF493D9E, textSize: 24, callback: btnOnClick),
-                                CalcButton(text: ".", fillColor: 0xFF493D9E, textSize: 24, callback: btnOnClick),
+                                CalcButton(
+                                    text: "AC",
+                                    fillColor: 0xFF7886C7,
+                                    textSize: 24,
+                                    callback: btnOnClick),
+                                CalcButton(
+                                    text: "0",
+                                    fillColor: 0xFF493D9E,
+                                    textSize: 24,
+                                    callback: btnOnClick),
+                                CalcButton(
+                                    text: ".",
+                                    fillColor: 0xFF493D9E,
+                                    textSize: 24,
+                                    callback: btnOnClick),
                               ],
                             ),
                           ],
@@ -222,7 +270,6 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                   ],
                 ),
               ),
-
             ],
           ),
         ),

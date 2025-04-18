@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -7,11 +6,13 @@ class SettingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return   Scaffold(
+    return Scaffold(
       appBar: AppBar(
-        leading: IconButton(onPressed: (){
-          context.go('/home');
-        }, icon: Icon(Icons.arrow_back_ios)),
+        leading: IconButton(
+            onPressed: () {
+              context.go('/home');
+            },
+            icon: Icon(Icons.arrow_back_ios)),
         backgroundColor: Colors.lightBlue,
         title: const Text('SettingScreen '),
       ),
