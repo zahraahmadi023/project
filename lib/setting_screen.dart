@@ -19,4 +19,5 @@ class SettingScreen extends StatelessWidget {
       body: Center(child: Text("SettingScreen")),
     );
   }
+  ////////////
 }
