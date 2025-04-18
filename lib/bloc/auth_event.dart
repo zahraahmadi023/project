@@ -1,35 +1,15 @@
-// import 'package:country_picker/country_picker.dart';
-
-// abstract class PhoneAuthEvent {}
-
-// class CountrySelected extends PhoneAuthEvent {
-//   final Country country;
-//   CountrySelected(this.country);
-// }
-
-// class PhoneChanged extends PhoneAuthEvent {
-//   final String phone;
-//   PhoneChanged(this.phone);
-// }
-
-// class ToggleCountryBorder extends PhoneAuthEvent {}
-
-// class SubmitPressed extends PhoneAuthEvent {}
-// phone_auth_event.dart
 import 'package:country_picker/country_picker.dart';
 
-abstract class PhoneAuthEvent {}
+abstract class LoginEvent {}
 
-class CountrySelected extends PhoneAuthEvent {
+class CountrySelectedEvent extends LoginEvent {
   final Country country;
-  CountrySelected(this.country);
+  CountrySelectedEvent(this.country, {required Country selectedCountry});
 }
 
-class PhoneChanged extends PhoneAuthEvent {
+class PhoneChangedEvent extends LoginEvent {
   final String phone;
-  PhoneChanged(this.phone);
+  PhoneChangedEvent(this.phone);
 }
 
-class ToggleCountryBorder extends PhoneAuthEvent {}
-
-class SubmitPressed extends PhoneAuthEvent {}
+class SubmitPressedEvent extends LoginEvent {}
