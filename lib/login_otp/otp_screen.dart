@@ -62,7 +62,7 @@ class _OtpScreenState extends State<OtpScreen> {
                 height: 20,
               ),
               Text(
-                "کد به این شماره ${widget.number} ارسال شده است",
+                "کد به این شماره ${widget.number.replaceAll(RegExp(r'[^0-9]'), '')}+ ارسال شده است",
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.grey,

@@ -21,7 +21,7 @@ class AppRouter {
       GoRoute(
         path: '/',
         builder: (context, state) => BlocProvider.value(
-          value: BlocProvider.of<PhoneAuthBloc>(context),
+          value: BlocProvider.of<AuthBloc>(context),
           child: LoginScreen(),
         ),
       ),
@@ -32,6 +32,7 @@ class AppRouter {
           return OtpScreen(number: code);
         },
       ),
+
       GoRoute(
         path: '/home',
         builder: (context, state) => MainLayout(child: HomeScreen()),

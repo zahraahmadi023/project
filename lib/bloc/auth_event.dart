@@ -1,15 +1,18 @@
-import 'package:country_picker/country_picker.dart';
+abstract class AuthEvent {}
 
-abstract class LoginEvent {}
+class CountryChanged extends AuthEvent {
+  final String phoneCode;
+  final String countryName;
 
-class CountrySelectedEvent extends LoginEvent {
-  final Country country;
-  CountrySelectedEvent(this.country, {required Country selectedCountry});
+  CountryChanged({required this.phoneCode, required this.countryName});
 }
 
-class PhoneChangedEvent extends LoginEvent {
-  final String phone;
-  PhoneChangedEvent(this.phone);
+class PhoneNumberChanged extends AuthEvent {
+  final String phoneNumber;
+
+  PhoneNumberChanged(this.phoneNumber);
 }
 
-class SubmitPressedEvent extends LoginEvent {}
+class SubmitPhoneNumber extends AuthEvent {}
+
+class ToggleColor extends AuthEvent {}

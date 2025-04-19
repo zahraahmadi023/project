@@ -2,36 +2,32 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project/bloc/auth_event.dart';
 import 'package:project/bloc/auth_state.dart';
 
-class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  LoginBloc() : super(LoginState()) {
-    on<CountrySelectedEvent>((event, emit) {
-      emit(state.copyWith(selectedCountry: event.country));
+class AuthBloc extends Bloc<AuthEvent, AuthState> {
+  AuthBloc() : super(AuthState()) {
+    on<CountryChanged>((event, emit) {
+      emit(state.copyWith(
+        phoneCode: event.phoneCode,
+        countryName: event.countryName,
+      ));
     });
 
-    on<PhoneChangedEvent>((event, emit) {
-      final phone = event.phone;
-      final englishPhone = phone.replaceAllMapped(
-        RegExp(r'[۰-۹]'),
-        (match) => (match.group(0)!.codeUnitAt(0) - 1728).toString(),
-      );
-      final isEnabled = int.tryParse(englishPhone) != null;
-
-      emit(state.copyWith(phone: phone, isButtonEnabled: isEnabled));
+    on<PhoneNumberChanged>((event, emit) {
+      final isValid = int.tryParse(event.phoneNumber) != null;
+      emit(state.copyWith(
+        phoneNumber: event.phoneNumber,
+        isValid: isValid,
+      ));
     });
 
-    on<SubmitPressedEvent>((event, emit) {
-      final phone = state.phone;
-      final phoneCode = state.selectedCountry?.phoneCode ?? '98';
+    on<ToggleColor>((event, emit) {
+      emit(state.copyWith(isBlack: !state.isBlack));
+    });
 
-      if (phone.length != 8 ||
-          (phoneCode == '98' &&
-              !(phone.startsWith('90') ||
-                  phone.startsWith('91') ||
-                  phone.startsWith('93')))) {
-        emit(state.copyWith(errorText: 'شماره همراه درست وارد نشده است'));
+    on<SubmitPhoneNumber>((event, emit) {
+      if (state.phoneNumber.length < 8) {
+        emit(state.copyWith(error: "شماره وارد شده معتبر نیست"));
       } else {
-        emit(state.copyWith(errorText: null));
-        // اینجا باید Navigator یا context.go رو صدا بزنی از UI
+        emit(state.copyWith(error: null));
       }
     });
   }

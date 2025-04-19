@@ -1,29 +1,35 @@
-import 'package:country_picker/country_picker.dart';
+class AuthState {
+  final String phoneCode;
+  final String countryName;
+  final String phoneNumber;
+  final bool isValid;
+  final String? error;
+  final bool isBlack;
 
-class LoginState {
-  final Country? selectedCountry;
-  final String phone;
-  final bool isButtonEnabled;
-  final String? errorText;
-
-  LoginState({
-    this.selectedCountry,
-    this.phone = '',
-    this.isButtonEnabled = false,
-    this.errorText,
+  AuthState({
+    this.phoneCode = '98',
+    this.countryName = 'ایران 🇮🇷',
+    this.phoneNumber = '',
+    this.isValid = false,
+    this.error,
+    this.isBlack = false,
   });
 
-  LoginState copyWith({
-    Country? selectedCountry,
-    String? phone,
-    bool? isButtonEnabled,
-    String? errorText,
+  AuthState copyWith({
+    String? phoneCode,
+    String? countryName,
+    String? phoneNumber,
+    bool? isValid,
+    String? error,
+    bool? isBlack,
   }) {
-    return LoginState(
-      selectedCountry: selectedCountry ?? this.selectedCountry,
-      phone: phone ?? this.phone,
-      isButtonEnabled: isButtonEnabled ?? this.isButtonEnabled,
-      errorText: errorText,
+    return AuthState(
+      phoneCode: phoneCode ?? this.phoneCode,
+      countryName: countryName ?? this.countryName,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      isValid: isValid ?? this.isValid,
+      error: error,
+      isBlack: isBlack ?? this.isBlack,
     );
   }
 }

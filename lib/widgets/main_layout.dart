@@ -26,18 +26,6 @@ class _MainLayoutState extends State<MainLayout> {
     final isDesktop = MediaQuery.of(context).size.width >= 600;
 
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: Colors.lightBlue,
-      //   title: const Text("Tank"),
-      //   leading: isDesktop
-      //       ? null
-      //       : Builder(
-      //           builder: (context) => IconButton(
-      //             icon: const Icon(Icons.menu),
-      //             onPressed: () => Scaffold.of(context).openDrawer(),
-      //           ),
-      //         ),
-      // ),
       drawer: isDesktop
           ? null
           : Drawer(
