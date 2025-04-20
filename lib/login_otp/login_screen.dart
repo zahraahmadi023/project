@@ -15,14 +15,6 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController phoneController = TextEditingController();
-  bool isBlack = false;
-
-  void _toggleColor() {
-    setState(() {
-      isBlack = !isBlack;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -31,7 +23,6 @@ class _LoginScreenState extends State<LoginScreen> {
           child: BlocBuilder<AuthBloc, AuthState>(
             builder: (context, state) {
               final bloc = context.read<AuthBloc>();
-
               return Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -50,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 20,
                     ),
                     const Text(
-                      "لطفا شماره همراه خودرا وارد کنید",
+                      "لطفاکشور و شماره همراه خودرا وارد کنید",
                       style: TextStyle(color: Colors.grey, fontSize: 20),
                     ),
                     const SizedBox(
@@ -58,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        _toggleColor();
+                        context.read<AuthBloc>().add(ToggleColor());
                         showCountryPicker(
                           context: context,
                           showPhoneCode: true,
@@ -245,3 +236,4 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+////

@@ -55,7 +55,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   fontSize: 16,
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 30),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
@@ -108,7 +108,7 @@ class _OtpScreenState extends State<OtpScreen> {
               const Text("دریافت کد جدید"),
               const Spacer(),
               Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
+                padding: const EdgeInsets.only(bottom: 12.0),
                 child: SizedBox(
                   width: 300,
                   height: 50,
