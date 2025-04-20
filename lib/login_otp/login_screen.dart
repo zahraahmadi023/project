@@ -15,6 +15,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController phoneController = TextEditingController();
+  Country? selectedCountry;
+  bool isBlack = false;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -57,11 +59,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             flagSize: 40,
                           ),
                           onSelect: (country) {
+                            setState(() {
+                              selectedCountry = country;
+                            });
                             bloc.add(CountryChanged(
-                              phoneCode: country.phoneCode,
-                              countryName:
-                                  "${country.name} ${country.flagEmoji}",
-                            ));
+                                phoneCode: country.phoneCode,
+                                countryName: country.name));
                           },
                         );
                       },
@@ -139,7 +142,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                                       1728)
                                                   .toString(),
                                         );
-
                                         context
                                             .read<AuthBloc>()
                                             .add(PhoneNumberChanged(
@@ -236,4 +238,4 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
-////
+/////////
