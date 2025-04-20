@@ -10,25 +10,44 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         countryName: event.countryName,
       ));
     });
-
-    on<PhoneNumberChanged>((event, emit) {
-      final isValid = int.tryParse(event.phoneNumber) != null;
-      emit(state.copyWith(
-        phoneNumber: event.phoneNumber,
-        isValid: isValid,
-      ));
-    });
-
     on<ToggleColor>((event, emit) {
       emit(state.copyWith(isBlack: !state.isBlack));
     });
+    on<PhoneNumberChanged>((event, emit) {
+      emit(state.copyWith(
+        phoneNumber: event.phone,
+        error: null,
+        isValid: false,
+      ));
+    });
 
     on<SubmitPhoneNumber>((event, emit) {
-      if (state.phoneNumber.length < 8) {
-        emit(state.copyWith(error: "شماره وارد شده معتبر نیست"));
-      } else {
-        emit(state.copyWith(error: null));
+      final phone = state.phoneNumber;
+      final phoneCode = state.phoneCode;
+      if (phone.length < 10) {
+        emit(state.copyWith(
+          error: "شماره وارد شده معتبر نیست",
+          isValid: false,
+        ));
+        return;
       }
+      if (phoneCode == '98') {
+        final prefix = phone.substring(0, 2);
+        if (!(prefix == '90' ||
+            prefix == '91' ||
+            prefix == '93' ||
+            prefix == '92')) {
+          emit(state.copyWith(
+            error: "پیش‌شماره معتبر نیست",
+            isValid: false,
+          ));
+          return;
+        }
+      }
+      emit(state.copyWith(
+        error: null,
+        isValid: true,
+      ));
     });
   }
 }

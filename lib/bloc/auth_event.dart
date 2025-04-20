@@ -8,9 +8,9 @@ class CountryChanged extends AuthEvent {
 }
 
 class PhoneNumberChanged extends AuthEvent {
-  final String phoneNumber;
+  final String phone;
 
-  PhoneNumberChanged(this.phoneNumber);
+  PhoneNumberChanged(this.phone);
 }
 
 class SubmitPhoneNumber extends AuthEvent {}

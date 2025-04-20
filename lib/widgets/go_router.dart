@@ -14,10 +14,6 @@ import '../login_otp/otp_screen.dart';
 class AppRouter {
   static final GoRouter router = GoRouter(
     routes: [
-      // GoRoute(
-      //   path: '/',
-      //   builder: (context, state) => LoginScreen(),
-      // ),
       GoRoute(
         path: '/',
         builder: (context, state) => BlocProvider.value(
@@ -32,12 +28,10 @@ class AppRouter {
           return OtpScreen(number: code);
         },
       ),
-
       GoRoute(
         path: '/home',
         builder: (context, state) => MainLayout(child: HomeScreen()),
       ),
-
       GoRoute(
         path: '/calc',
         builder: (context, state) => MainLayout(child: CalculatorScreen()),

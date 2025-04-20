@@ -2,7 +2,6 @@ import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import 'package:project/bloc/auth_bloc.dart';
 import 'package:project/bloc/auth_event.dart';
 import 'package:project/bloc/auth_state.dart';
@@ -24,18 +23,6 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
 
-  String convertToFarsiWithIntl(String input) {
-    try {
-      final formatter = NumberFormat.decimalPattern('fa');
-      return formatter.format(int.parse(input));
-    } catch (e) {
-      return input.replaceAllMapped(RegExp(r'[0-9]'), (match) {
-        final num = match.group(0)!;
-        return String.fromCharCode(num.codeUnitAt(0) + 1728);
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -52,7 +39,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(
                       height: 100,
                     ),
-
                     const Text(
                       "شماره همراه  ",
                       style: TextStyle(
@@ -63,7 +49,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(
                       height: 20,
                     ),
-
                     const Text(
                       "لطفا شماره همراه خودرا وارد کنید",
                       style: TextStyle(color: Colors.grey, fontSize: 20),
@@ -71,8 +56,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(
                       height: 30,
                     ),
-
-                    /// Country Picker Box
                     GestureDetector(
                       onTap: () {
                         _toggleColor();
@@ -136,97 +119,119 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     const SizedBox(height: 30),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        SizedBox(
-                          height: 80,
-                          width: 300,
-                          child: TextField(
-                            controller: phoneController,
-                            keyboardType: TextInputType.number,
-                            maxLength: 8,
-                            onChanged: (value) {
-                              final english = value.replaceAllMapped(
-                                RegExp(r'[۰-۹]'),
-                                (match) =>
-                                    (match.group(0)!.codeUnitAt(0) - 1728)
-                                        .toString(),
-                              );
+                    BlocListener<AuthBloc, AuthState>(
+                        listener: (context, state) {
+                          if (state.isValid && state.error == null) {
+                            final fullNumber =
+                                "+${state.phoneCode}${state.phoneNumber}";
+                            context.go('/otp/$fullNumber');
+                          }
+                        },
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              SizedBox(
+                                height: 80,
+                                width: 300,
+                                child: BlocBuilder<AuthBloc, AuthState>(
+                                  builder: (context, state) {
+                                    return TextField(
+                                      controller: phoneController,
+                                      keyboardType: TextInputType.number,
+                                      maxLength: 10,
+                                      onChanged: (value) {
+                                        final english = value.replaceAllMapped(
+                                          RegExp(r'[۰-۹]'),
+                                          (match) =>
+                                              (match.group(0)!.codeUnitAt(0) -
+                                                      1728)
+                                                  .toString(),
+                                        );
 
-                              bloc.add(PhoneNumberChanged(english));
-                            },
-                            textAlign: TextAlign.left,
-                            decoration: InputDecoration(
-                              floatingLabelBehavior:
-                                  FloatingLabelBehavior.always,
-                              alignLabelWithHint: true,
-                              labelText: "شماره همراه",
-                              labelStyle: const TextStyle(color: Colors.black),
-                              hintText: "۹۱۹۹۸۹۸۹۸",
-                              hintStyle: const TextStyle(color: Colors.grey),
-                              prefixText: "+${state.phoneCode} | ",
-                              prefixStyle:
-                                  const TextStyle(fontWeight: FontWeight.bold),
-                              border: OutlineInputBorder(
-                                borderSide:
-                                    const BorderSide(color: Colors.black),
-                                borderRadius: BorderRadius.circular(12),
+                                        context
+                                            .read<AuthBloc>()
+                                            .add(PhoneNumberChanged(
+                                              english,
+                                            ));
+                                      },
+                                      textAlign: TextAlign.left,
+                                      decoration: InputDecoration(
+                                        floatingLabelBehavior:
+                                            FloatingLabelBehavior.always,
+                                        alignLabelWithHint: true,
+                                        labelText: "شماره همراه",
+                                        labelStyle: const TextStyle(
+                                            color: Colors.black),
+                                        hintText: "912 677 7890",
+                                        hintStyle:
+                                            const TextStyle(color: Colors.grey),
+                                        prefixText: "+${state.phoneCode} | ",
+                                        prefixStyle: const TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                        border: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: Colors.black),
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: Colors.blue),
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
                               ),
-                            ),
+                              BlocBuilder<AuthBloc, AuthState>(
+                                builder: (context, state) {
+                                  if (state.error != null) {
+                                    return Padding(
+                                      padding: const EdgeInsets.only(
+                                          right: 20.0, top: 4),
+                                      child: Text(
+                                        state.error!,
+                                        style: const TextStyle(
+                                            color: Colors.red, fontSize: 13),
+                                        textAlign: TextAlign.right,
+                                      ),
+                                    );
+                                  }
+                                  return const SizedBox();
+                                },
+                              ),
+                            ])),
+                    const Spacer(),
+                    SizedBox(
+                      width: 300,
+                      height: 50,
+                      child: TextButton(
+                        onPressed: () {
+                          final english = phoneController.text.replaceAllMapped(
+                            RegExp(r'[۰-۹]'),
+                            (match) => (match.group(0)!.codeUnitAt(0) - 1728)
+                                .toString(),
+                          );
+                          context
+                              .read<AuthBloc>()
+                              .add(PhoneNumberChanged(english));
+                          context.read<AuthBloc>().add(SubmitPhoneNumber());
+                        },
+                        style: TextButton.styleFrom(
+                          backgroundColor: const Color(0xff3674B5),
+                          foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 6),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
                           ),
                         ),
-                        if (state.error != null)
-                          Text(
-                            state.error!,
-                            style: const TextStyle(
-                                color: Colors.red, fontSize: 13),
-                            textAlign: TextAlign.right,
-                          ),
-                      ],
-                    ),
-
-                    const Spacer(),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: SizedBox(
-                        width: 300,
-                        height: 50,
-                        child: TextButton(
-                          onPressed: state.isValid
-                              ? () {
-                                  if (state.error == null) {
-                                    final input = state.phoneNumber;
-                                    final code = state.phoneCode;
-                                    final fullNumber = '+$code$input';
-                                    context.go('/otp/$fullNumber');
-                                    bloc.add(SubmitPhoneNumber());
-                                    if (state.error == null) {
-                                      final full =
-                                          "+${state.phoneCode}${state.phoneNumber}";
-                                      context.go('/otp/$full');
-                                    }
-                                  }
-                                }
-                              : null,
-                          style: TextButton.styleFrom(
-                            backgroundColor: state.isValid
-                                ? const Color(0xff3674B5)
-                                : const Color(0xffC6E7FF),
-                            foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 6),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                          ),
-                          child: Text(
-                            "تایید و ادامه",
-                            style: TextStyle(
-                              color:
-                                  state.isValid ? Colors.white : Colors.black,
-                            ),
-                          ),
+                        child: const Text(
+                          "تایید و ادامه",
+                          style: TextStyle(color: Colors.white),
                         ),
                       ),
                     ),

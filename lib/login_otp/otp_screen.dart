@@ -1,7 +1,6 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 
 class OtpScreen extends StatefulWidget {
   final String number;
@@ -15,52 +14,39 @@ class _OtpScreenState extends State<OtpScreen> {
   bool isButtonEnabled = false;
   String? errorText;
 
-  String convertToFarsiWithIntl(String input) {
-    try {
-      final formatter = NumberFormat.decimalPattern('fa');
-      return formatter.format(int.parse(input));
-    } catch (e) {
-      return input.replaceAllMapped(RegExp(r'[0-9]'), (match) {
-        final num = match.group(0)!;
-        return String.fromCharCode(num.codeUnitAt(0) + 1728);
-      });
-    }
-  }
-
   Country? selectedCountry;
 
   final TextEditingController phoneController = TextEditingController();
 
   bool isRed = false;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
-              onPressed: () {
-                context.go('/');
-              },
-              icon: Icon(Icons.arrow_back)),
+            onPressed: () {
+              context.go('/');
+            },
+            icon: const Icon(Icons.arrow_back),
+          ),
         ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(
-                height: 100,
-              ),
+              const SizedBox(height: 100),
               const Text(
-                "کد ورود ",
+                "کد ورود",
                 style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                    fontSize: 25),
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                  fontSize: 25,
+                ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               Text(
                 "کد به این شماره ${widget.number.replaceAll(RegExp(r'[^0-9]'), '')}+ ارسال شده است",
                 style: const TextStyle(
@@ -69,9 +55,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   fontSize: 16,
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
@@ -82,16 +66,6 @@ class _OtpScreenState extends State<OtpScreen> {
                       keyboardType: TextInputType.number,
                       maxLength: 6,
                       onChanged: (value) {
-                        final farsi = convertToFarsiWithIntl(value);
-
-                        if (value != farsi) {
-                          phoneController.value = TextEditingValue(
-                            text: farsi,
-                            selection:
-                                TextSelection.collapsed(offset: farsi.length),
-                          );
-                        }
-
                         final english = value.replaceAllMapped(
                           RegExp(r'[۰-۹]'),
                           (match) =>
@@ -99,28 +73,24 @@ class _OtpScreenState extends State<OtpScreen> {
                         );
 
                         setState(() {
-                          isButtonEnabled = int.tryParse(english) != null;
+                          isButtonEnabled = int.tryParse(english) != null &&
+                              english.length == 6;
                         });
                       },
                       textAlign: TextAlign.left,
-                      //textAlign: TextAlign.right,
                       decoration: InputDecoration(
-                        //hintTextDirection: Alignment.centerLeft,
                         floatingLabelBehavior: FloatingLabelBehavior.always,
                         alignLabelWithHint: true,
                         labelText: "کد ورود",
-                        labelStyle: TextStyle(color: Colors.black),
-                        hintText: " ۱۸۸۹۸۸",
-                        hintStyle: const TextStyle(
-                          color: Colors.grey,
-                        ),
-
+                        labelStyle: const TextStyle(color: Colors.black),
+                        hintText: "123456",
+                        hintStyle: const TextStyle(color: Colors.grey),
                         border: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.black),
+                          borderSide: const BorderSide(color: Colors.black),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.blue),
+                          borderSide: const BorderSide(color: Colors.blue),
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
@@ -134,9 +104,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     ),
                 ],
               ),
-              const SizedBox(
-                height: 70,
-              ),
+              const SizedBox(height: 70),
               const Text("دریافت کد جدید"),
               const Spacer(),
               Padding(
@@ -147,13 +115,13 @@ class _OtpScreenState extends State<OtpScreen> {
                   child: TextButton(
                     onPressed: isButtonEnabled
                         ? () {
-                            String input =
-                                convertToFarsiWithIntl(phoneController.text);
-                            if (input.length != 6 || input.isNotEmpty) {
+                            final input = phoneController.text;
+
+                            if (input.length == 6) {
                               context.go('/home');
                             } else {
                               setState(() {
-                                errorText = null;
+                                errorText = "کد وارد شده باید ۶ رقمی باشد";
                               });
                             }
                           }
@@ -177,7 +145,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -185,5 +153,3 @@ class _OtpScreenState extends State<OtpScreen> {
     );
   }
 }
-/////
-////////
