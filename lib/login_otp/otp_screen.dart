@@ -71,7 +71,6 @@ class _OtpScreenState extends State<OtpScreen> {
                           (match) =>
                               (match.group(0)!.codeUnitAt(0) - 1728).toString(),
                         );
-
                         setState(() {
                           isButtonEnabled = int.tryParse(english) != null &&
                               english.length == 6;
@@ -116,7 +115,6 @@ class _OtpScreenState extends State<OtpScreen> {
                     onPressed: isButtonEnabled
                         ? () {
                             final input = phoneController.text;
-
                             if (input.length == 6) {
                               context.go('/home');
                             } else {

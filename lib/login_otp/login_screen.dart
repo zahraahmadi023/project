@@ -51,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        context.read<AuthBloc>().add(ToggleColor());
+                        bloc.add(ToggleColor());
                         showCountryPicker(
                           context: context,
                           showPhoneCode: true,
@@ -142,11 +142,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                                       1728)
                                                   .toString(),
                                         );
-                                        context
-                                            .read<AuthBloc>()
-                                            .add(PhoneNumberChanged(
-                                              english,
-                                            ));
+                                        bloc.add(PhoneNumberChanged(
+                                          english,
+                                        ));
                                       },
                                       textAlign: TextAlign.left,
                                       decoration: InputDecoration(
@@ -208,10 +206,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             (match) => (match.group(0)!.codeUnitAt(0) - 1728)
                                 .toString(),
                           );
-                          context
-                              .read<AuthBloc>()
-                              .add(PhoneNumberChanged(english));
-                          context.read<AuthBloc>().add(SubmitPhoneNumber());
+
+                          bloc.add(PhoneNumberChanged(english));
+                          bloc.add(SubmitPhoneNumber());
                         },
                         style: TextButton.styleFrom(
                           backgroundColor: const Color(0xff3674B5),
@@ -238,4 +235,4 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
-/////////
+////

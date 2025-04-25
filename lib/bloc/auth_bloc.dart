@@ -10,9 +10,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         countryName: event.countryName,
       ));
     });
+
     on<ToggleColor>((event, emit) {
       emit(state.copyWith(isBlack: !state.isBlack));
     });
+
     on<PhoneNumberChanged>((event, emit) {
       emit(state.copyWith(
         phoneNumber: event.phone,
